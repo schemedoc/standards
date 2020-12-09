@@ -17,6 +17,6 @@ latex209 r3rs.tex
 test -s r3rs.dvi
 dvipdf r3rs.dvi
 test -s r3rs.pdf
-mv -fv r3rs.dvi r3rs.pdf ../
+mv -fv r3rs.dvi r3rs.log r3rs.pdf ../
 cd ..
 rm -rfv r3rs
