@@ -9,5 +9,5 @@ mkdir docker
 cp -pv checksum convert.sh r3rs.tar docker/
 docker build --tag rnrs-pdf .
 docker run --rm --volume "$PWD/docker:/docker" rnrs-pdf /docker/convert.sh
-cp -pv docker/r3rs.dvi docker/r3rs.pdf ./
+cp -pfv docker/r3rs.dvi docker/r3rs.pdf ./
 rm -rfv docker/
