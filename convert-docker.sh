@@ -4,5 +4,6 @@ exec </dev/null 2>&1
 cd "$(dirname "$0")"
 echo "Entering directory '$PWD'"
 set -x
-docker build -t rnrs-pdf .
-docker run -t rnrs-pdf -V $PWD/docker:/docker
+docker rmi --force rnrs-pdf
+docker build --tag rnrs-pdf .
+docker run --volume "$PWD/docker:/docker" rnrs-pdf
