@@ -6,4 +6,4 @@ echo "Entering directory '$PWD'"
 set -x
 docker rmi --force rnrs-pdf
 docker build --tag rnrs-pdf .
-docker run --volume "$PWD/docker:/docker" rnrs-pdf
+docker run --rm --volume "$PWD/docker:/docker" rnrs-pdf
