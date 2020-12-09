@@ -13,6 +13,9 @@ mkdir -p r3rs
 find r3rs -mindepth 1 -delete
 cd r3rs
 tar -xf ../r3rs.tar
+! test -e r3rs.toc
+latex209 r3rs.tex
+test -s r3rs.toc
 latex209 r3rs.tex
 test -s r3rs.dvi
 dvipdf r3rs.dvi
