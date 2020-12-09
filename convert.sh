@@ -7,8 +7,8 @@ set -x
 command -V dvipdf
 command -V latex209
 command -V shasum
-shasum -c checksum
 test -f r3rs.tar
+shasum -c checksum
 mkdir -p r3rs
 find r3rs -mindepth 1 -delete
 cd r3rs
