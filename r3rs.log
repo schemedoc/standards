@@ -1,4 +1,4 @@
-This is TeXk, Version 3.14159265 (TeX Live 2019/dev/Debian) (preloaded format=latex209 2020.12.9)  9 DEC 2020 17:41
+This is TeXk, Version 3.14159265 (TeX Live 2019/dev/Debian) (preloaded format=latex209 2020.12.9)  9 DEC 2020 17:46
  restricted \write18 enabled.
  %&-line parsing enabled.
 **r3rs.tex
@@ -21,114 +21,61 @@ Document Style 'algol60'.
 
 
 Writing index file r3rs.idx 
-(./commands.tex)
-No file r3rs.aux.
+(./commands.tex) (./r3rs.aux
+LaTeX Warning: Label `if' multiply defined on input line 59.
+LaTeX Warning: Label `let' multiply defined on input line 79.
+LaTeX Warning: Label `delay' multiply defined on input line 83.
+LaTeX Warning: Label `append' multiply defined on input line 129.
+LaTeX Warning: Label `max' multiply defined on input line 172.
+LaTeX Warning: Label `min' multiply defined on input line 174.
+LaTeX Warning: Label `+' multiply defined on input line 176.
+LaTeX Warning: Label `*' multiply defined on input line 178.
+LaTeX Warning: Label `-' multiply defined on input line 180.
+LaTeX Warning: Label `/' multiply defined on input line 182.
+LaTeX Warning: Label `rationalize' multiply defined on input line 196.
+LaTeX Warning: Label `atan' multiply defined on input line 205.
+LaTeX Warning: Label `make-string' multiply defined on input line 262.
+LaTeX Warning: Label `string-append' multiply defined on input line 278.
+LaTeX Warning: Label `make-vector' multiply defined on input line 287.
+LaTeX Warning: Label `apply' multiply defined on input line 299.
+LaTeX Warning: Label `map' multiply defined on input line 301.
+LaTeX Warning: Label `for-each' multiply defined on input line 303.
+LaTeX Warning: Label `read' multiply defined on input line 327.
+LaTeX Warning: Label `read-char' multiply defined on input line 329.
+LaTeX Warning: Label `char-ready?' multiply defined on input line 331.
+LaTeX Warning: Label `write' multiply defined on input line 336.
+LaTeX Warning: Label `display' multiply defined on input line 338.
+LaTeX Warning: Label `newline' multiply defined on input line 340.
+LaTeX Warning: Label `write-char' multiply defined on input line 342.
+)
 \openout1 = `r3rs.aux'.
 
-(./first.tex
-LaTeX Warning: Reference `expressionchapter' on page 1 undefined on input line 
-59.
-LaTeX Warning: Reference `programchapter' on page 1 undefined on input line 59.
-
-LaTeX Warning: Reference `builtinchapter' on page 1 undefined on input line 62.
-
-LaTeX Warning: Reference `formalchapter' on page 1 undefined on input line 66.
-No file r3rs.toc.
+ (./first.tex (./r3rs.toc)
 \tf@toc=\write4
 \openout4 = `r3rs.toc'.
 
-[1
+ [1
 
 
-]) (./intro.tex
-LaTeX Warning: Citation `Scheme75' on page 2 undefined on input line 52.
-LaTeX Warning: Citation `Scheme78' on page 2 undefined on input line 52.
-LaTeX Warning: Citation `Rabbit' on page 2 undefined on input line 55.
-LaTeX Warning: Citation `Rees82' on page 2 undefined on input line 57.
-LaTeX Warning: Citation `MITScheme' on page 2 undefined on input line 57.
-LaTeX Warning: Citation `Scheme311' on page 2 undefined on input line 57.
-LaTeX Warning: Citation `SICP' on page 2 undefined on input line 59.
-LaTeX Warning: Citation `RRRS' on page 2 undefined on input line 85.
-) [2
+]) (./intro.tex) [2
 
 ] (./struct.tex
  1.
-LaTeX Warning: Reference `basicchapter' on page 3 undefined on input line 10.
-LaTeX Warning: Reference `builtinchapter' on page 3 undefined on input line 10.
-
-LaTeX Warning: Reference `formalsemanticssection' on page 3 undefined on input 
-line 11.
-LaTeX Warning: Reference `continuations' on page 3 undefined on input line 52.
-LaTeX Warning: Reference `expressionchapter' on page 3 undefined on input line 
-122.
-LaTeX Warning: Reference `builtinchapter' on page 3 undefined on input line 122
-.
 [3
 
-]
-LaTeX Warning: Reference `externalreps' on page 4 undefined on input line 206.
-) (./lex.tex
+]) (./lex.tex
  2.
-LaTeX Warning: Reference `BNF' on page 4 undefined on input line 8.
-LaTeX Warning: Reference `extendedalphas' on page 4 undefined on input line 43.
-
-LaTeX Warning: Reference `variablesection' on page 4 undefined on input line 53
-.
-LaTeX Warning: Reference `quote' on page 4 undefined on input line 56.
-LaTeX Warning: Reference `symbolsection' on page 4 undefined on input line 57.
 
 Underfull \hbox (badness 1226) in paragraph at lines 62--64
 []\tenrm The fol-low-ing iden-ti-fiers are syn-tac-tic key-words, and
 
 \hbox(6.94444+1.94444)x254.0, glue set 2.30664 []
 
-[4]
-LaTeX Warning: Reference `numbersection' on page 5 undefined on input line 125.
-
-LaTeX Warning: Reference `listsection' on page 5 undefined on input line 134.
-LaTeX Warning: Reference `lambda' on page 5 undefined on input line 135.
-LaTeX Warning: Reference `listsection' on page 5 undefined on input line 139.
-LaTeX Warning: Reference `quote' on page 5 undefined on input line 142.
-LaTeX Warning: Reference `quasiquote' on page 5 undefined on input line 146.
-LaTeX Warning: Reference `quasiquote' on page 5 undefined on input line 150.
-LaTeX Warning: Reference `stringsection' on page 5 undefined on input line 153.
-
-LaTeX Warning: Reference `stringsection' on page 5 undefined on input line 157.
-
-LaTeX Warning: Reference `booleansection' on page 5 undefined on input line 168
-.
-LaTeX Warning: Reference `charactersection' on page 5 undefined on input line 1
-71.
-LaTeX Warning: Reference `vectorsection' on page 5 undefined on input line 174.
-
-LaTeX Warning: Reference `numbernotations' on page 5 undefined on input line 17
-8.
-) (./basic.tex
+[4]) (./basic.tex
  3.
-LaTeX Warning: Reference `keywordsection' on page 5 undefined on input line 10.
-
-LaTeX Warning: Reference `lambda' on page 5 undefined on input line 34.
-LaTeX Warning: Reference `letrec' on page 5 undefined on input line 34.
-LaTeX Warning: Reference `do' on page 5 undefined on input line 34.
-[5]
-LaTeX Warning: Reference `initialenv' on page 6 undefined on input line 50.
-LaTeX Warning: Reference `booleansection' on page 6 undefined on input line 71.
-
-LaTeX Warning: Reference `listsection' on page 6 undefined on input line 93.
-LaTeX Warning: Reference `quote' on page 6 undefined on input line 100.
-LaTeX Warning: Reference `read' on page 6 undefined on input line 103.
-LaTeX Warning: Reference `write' on page 6 undefined on input line 104.
-LaTeX Warning: Reference `initialenv' on page 6 undefined on input line 122.
-) (./expr.tex
+[5]) (./expr.tex
  4.
-LaTeX Warning: Reference `derivedsection' on page 6 undefined on input line 15.
-
-LaTeX Warning: Reference `variablesection' on page 6 undefined on input line 28
-.
-LaTeX Warning: Reference `externalreps' on page 6 undefined on input line 50.
 [6]
-LaTeX Warning: Reference `lambda' on page 7 undefined on input line 109.
-
 Underfull \hbox (badness 1460) in paragraph at lines 187--193
 [] []\tentt ($\tensy h$\tenrm variable$[]$$\tensy i$ $[] $ $h$\tenrm variable$[
 ]$$\tensy i$ \tenbf . $\tensy h$\tenrm variable$[]$$\tensy i$\tentt )\tenrm : I
@@ -136,40 +83,11 @@ f a
 
 \hbox(7.5+2.5)x233.99997, glue set 2.44489 []
 
-[7]
-LaTeX Warning: Reference `booleansection' on page 8 undefined on input line 217
-.
-LaTeX Warning: Reference `derivedsection' on page 8 undefined on input line 257
-.
-LaTeX Warning: Reference `booleansection' on page 8 undefined on input line 284
-.
-LaTeX Warning: Reference `eqv?' on page 8 undefined on input line 342.
-LaTeX Warning: Reference `booleansection' on page 8 undefined on input line 372
-.
-[8]
-LaTeX Warning: Reference `booleansection' on page 9 undefined on input line 392
-.
-LaTeX Warning: Reference `namedlet' on page 9 undefined on input line 449.
-[9]
-LaTeX Warning: Citation `SICP' on page 10 undefined on input line 553.
-LaTeX Warning: Reference `booleansection' on page 10 undefined on input line 58
-0.
-LaTeX Warning: Reference `force' on page 10 undefined on input line 665.
-[10]) (./prog.tex
+[7] [8] [9] [10]) (./prog.tex
  5.
-LaTeX Warning: Reference `expressionchapter' on page 11 undefined on input line
- 7.
 [11]) (./procs.tex
  6.
-[12]
-LaTeX Warning: Reference `=' on page 13 undefined on input line 135.
-LaTeX Warning: Reference `exactly' on page 13 undefined on input line 136.
-LaTeX Warning: Reference `char=?' on page 13 undefined on input line 139.
-[13] [14]
-LaTeX Warning: Reference `datum' on page 15 undefined on input line 440.
-LaTeX Warning: Reference `externalreps' on page 15 undefined on input line 442.
-
-
+[12] [13] [14]
 Underfull \hbox (badness 1509) in paragraph at lines 431--443
 []\tenrm Within lit-eral ex-pres-sions and rep-re-sen-ta-tions of ob-
 
@@ -183,52 +101,26 @@ note two-ele-
 
 \hbox(7.5+2.5)x254.0, glue set 2.56969 []
 
-[15] [16]
-LaTeX Warning: Reference `syntaxsection' on page 17 undefined on input line 753
-.
-LaTeX Warning: Reference `identifiersyntax' on page 17 undefined on input line 
-754.
-LaTeX Warning: Reference `literalsection' on page 17 undefined on input line 79
-5.
-LaTeX Warning: Citation `Pitman83' on page 17 undefined on input line 854.
-[17] [18]
-LaTeX Warning: Reference `numbersyntax' on page 19 undefined on input line 995.
-
-LaTeX Warning: Reference `numberformats' on page 19 undefined on input line 995
-.
-LaTeX Warning: Reference `typeconventions' on page 19 undefined on input line 1
-032.
-[19]
+[15] [16] [17] [18] [19]
 Underfull \hbox (badness 1052) in paragraph at lines 1247--1257
 []\tentt Floor \tenrm re-turns the largest in-te-ger not larger than [].
 
 \hbox(6.94444+1.94444)x254.0, glue set 2.19427 []
 
 [20]
-LaTeX Warning: Citation `CLtL' on page 21 undefined on input line 1299.
-LaTeX Warning: Citation `Penfield81' on page 21 undefined on input line 1300.
-
 Underfull \hbox (badness 3323) in paragraph at lines 1337--1344
 \tenrm Then []\tentt make-rectangular \tenrm and []\tentt make-polar \tenrm re-
 turn [],
 
 \hbox(6.94444+2.22223)x254.0, glue set 3.21597 []
 
-LaTeX Warning: Reference `numberformats' on page 21 undefined on input line 137
-4.
-LaTeX Warning: Reference `numbersyntax' on page 21 undefined on input line 1398
-.
-LaTeX Warning: Reference `formatdetails' on page 21 undefined on input line 141
-7.
 [21] [22] [23] [24]
 Underfull \hbox (badness 1275) in paragraph at lines 1888--1894
 []\tenrm These pro-ce-dures are the lex-i-co-graphic ex-ten-sions to
 
 \hbox(6.94444+1.94444)x254.0, glue set 2.33887 []
 
-[25]
-LaTeX Warning: Reference `delay' on page 26 undefined on input line 2189.
-[26]
+[25] [26]
 Underfull \hbox (badness 10000) in paragraph at lines 2309--2312
 []\tenrm The es-cape pro-ce-dure cre-ated by
 
@@ -247,9 +139,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 2344--2349
 \hbox(6.25+0.0)x254.0, glue set 32.08664 []
 
 [27]
-LaTeX Warning: Citation `Landin65' on page 28 undefined on input line 2368.
-LaTeX Warning: Citation `Reynolds72' on page 28 undefined on input line 2370.
-
 Underfull \hbox (badness 1931) in paragraph at lines 2404--2411
 [] \tenrm should be a pro-ce-dure of one ar-gu-ment, and
 
@@ -273,25 +162,16 @@ Underfull \hbox (badness 7796) in paragraph at lines 2454--2464
 
 \hbox(6.94444+1.94444)x254.0, glue set 4.2736 []
 
-[28]
-LaTeX Warning: Reference `datum' on page 29 undefined on input line 2531.
-[29]) (./syn.tex
+[28] [29]) (./syn.tex
  7.
-[30]
-LaTeX Warning: Reference `read' on page 31 undefined on input line 144.
-[31]) (./sem.tex
-LaTeX Warning: Citation `Stoy77' on page 32 undefined on input line 37.
-[32] [33] [34]) (./derive.tex [35]
+[30] [31]) (./sem.tex [32] [33] [34]) (./derive.tex [35]
 Underfull \hbox (badness 1616) in paragraph at lines 148--151
 \tenrm where $\tensy h$\tenrm loop$\tensy i$ \tenrm is any vari-able which is d
 is-tinct from
 
 \hbox(7.5+2.5)x254.0, glue set 2.53123 []
 
-LaTeX Warning: Reference `force' on page 36 undefined on input line 165.
 ) (./notes.tex
-LaTeX Warning: Citation `RRRS' on page 36 undefined on input line 11.
-
 Underfull \hbox (badness 2538) in paragraph at lines 64--65
 [] []\tenrm Expression types re-moved: \tentt named-lambda\tenrm , \tentt rec\t
 enrm ,
@@ -328,7 +208,6 @@ Underfull \hbox (badness 2050) in paragraph at lines 71--76
 
 \hbox(7.5+2.5)x233.4444, glue set 2.73936 []
 
-LaTeX Warning: Citation `Scheme84' on page 38 undefined on input line 81.
 [38]
 Underfull \hbox (badness 3657) in paragraph at lines 97--100
 [] []\tenrm D. Fried-man, C. Haynes, E. Kohlbecker, and
@@ -371,12 +250,12 @@ Underfull \hbox (badness 1024) in paragraph at lines 309--312
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
  ) 
 Here is how much of TeX's memory you used:
- 613 strings out of 496914
- 5701 string characters out of 6211572
- 53185 words of memory out of 5000000
+ 617 strings out of 496914
+ 5737 string characters out of 6211572
+ 56329 words of memory out of 5000000
  2529 multiletter control sequences out of 15000+600000
  19304 words of font info for 73 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 19i,11n,20p,215b,417s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 19i,11n,18p,215b,417s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on r3rs.dvi (43 pages, 262312 bytes).
+Output written on r3rs.dvi (43 pages, 269460 bytes).
