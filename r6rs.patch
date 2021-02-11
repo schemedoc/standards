@@ -1,0 +1,13 @@
+--- r6rs/document/lex.tex.orig	2007-09-25 06:09:41.000000000 +0300
++++ r6rs/document/lex.tex	2021-02-11 21:00:52.000000000 +0200
+@@ -314,8 +314,9 @@
+ the comment prefix {\tt \#;} and the \hyper{datum} together.  This
+ notation is useful for ``commenting out'' sections of code.
+ 
++%% XXX: These index entries don't work.
+ Block comments may be indicated with properly nested {\tt
+-  \#|}\index{#"|@\texttt{\sharpsign\verticalbar}}\index{"|#@\texttt{\verticalbar\sharpsign}}
++  \#|}\index{#\"|@\texttt{\sharpsign\verticalbar}}\index{\"|#@\texttt{\verticalbar\sharpsign}}
+ and {\tt |\#} pairs.
+ 
+ \begin{scheme}
