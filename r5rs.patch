@@ -1,0 +1,18 @@
+--- r5rs/r5rs.tex.orig	2021-02-11 13:48:13.000000000 +0200
++++ r5rs/r5rs.tex	2021-02-11 13:48:53.000000000 +0200
+@@ -1,6 +1,15 @@
+ \documentclass[twoside,twocolumn]{algol60}
+ %\documentclass[twoside]{algol60}
+ 
++% Reproducible build:
++\pdfsuppressptexinfo=-1
++\pdfinfoomitdate=1
++\pdftrailerid{}
++
++% Hyperlinks:
++\usepackage{bookmark}
++\usepackage{hyperref}
++
+ \pagestyle{headings}
+ \showboxdepth=0
+ \makeindex
