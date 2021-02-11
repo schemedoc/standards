@@ -2,6 +2,7 @@
 set -eu
 cd "$(dirname "$0")"
 echo "Entering directory '$PWD'"
+exec </dev/null
 exec >r5rs.log 2>&1
 set -x
 shasum -c r5rs.sha.src
