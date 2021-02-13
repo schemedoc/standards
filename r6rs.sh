@@ -11,7 +11,7 @@ extract() {
     tar -xf r6rs.tar.gz
 }
 extract
-patch -p 0 <r6rs-official.patch
+(cd r6rs && patch -p 1 <../r6rs-official.patch)
 (cd r6rs/document && make report LATEX=pdflatex)
 mv -f r6rs/document/r6rs{,-app,-lib,-rationale}.pdf output/
 extract

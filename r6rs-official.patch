@@ -1,6 +1,21 @@
---- r6rs/document/lex.tex.orig	2007-09-25 06:09:41.000000000 +0300
-+++ r6rs/document/lex.tex	2021-02-11 21:00:52.000000000 +0200
-@@ -314,8 +314,9 @@
+diff --git b/document/Makefile a/document/Makefile
+index 2635a43..24c424f 100644
+--- b/document/Makefile
++++ a/document/Makefile
+@@ -5,7 +5,7 @@ MAKEINDEX = makeindex
+ SCHEME = scheme48 -a batch
+ MZSCHEME = mzscheme
+ # use the one from tex2page distro, *not* the one included with PLT Scheme
+-TEX2PAGE = tex2page
++TEX2PAGE = /afs/wsi/home/sperber/build/tex2page/tex2page
+ 
+ report: thirdrun
+ 
+diff --git b/document/lex.tex a/document/lex.tex
+index 1418be8..1241121 100644
+--- b/document/lex.tex
++++ a/document/lex.tex
+@@ -314,8 +314,9 @@ Another way to indicate a comment is to prefix a \hyper{datum}
  the comment prefix {\tt \#;} and the \hyper{datum} together.  This
  notation is useful for ``commenting out'' sections of code.
  
@@ -11,3 +26,66 @@
  and {\tt |\#} pairs.
  
  \begin{scheme}
+diff --git b/document/r6rs-app.tex a/document/r6rs-app.tex
+index 869a41a..4eeadab 100644
+--- b/document/r6rs-app.tex
++++ a/document/r6rs-app.tex
+@@ -1,6 +1,11 @@
+  \documentclass[twoside,twocolumn]{algol60}
+ %\documentclass[twoside]{algol60}
+ 
++% Reproducible build:
++\pdfsuppressptexinfo=-1
++\pdfinfoomitdate=1
++\pdftrailerid{}
++
+ \pagestyle{headings} 
+ \showboxdepth=0
+ %\makeindex
+diff --git b/document/r6rs-lib.tex a/document/r6rs-lib.tex
+index c9df235..1c0333c 100644
+--- b/document/r6rs-lib.tex
++++ a/document/r6rs-lib.tex
+@@ -1,6 +1,11 @@
+ \documentclass[twoside,twocolumn]{algol60}
+ %\documentclass[twoside]{algol60}
+ 
++% Reproducible build:
++\pdfsuppressptexinfo=-1
++\pdfinfoomitdate=1
++\pdftrailerid{}
++
+ \pagestyle{headings} 
+ \showboxdepth=0
+ \makeindex
+diff --git b/document/r6rs-rationale.tex a/document/r6rs-rationale.tex
+index 7921c0c..de28963 100644
+--- b/document/r6rs-rationale.tex
++++ a/document/r6rs-rationale.tex
+@@ -1,6 +1,11 @@
+ \documentclass[twoside,twocolumn]{algol60}
+ %\documentclass[twoside]{algol60}
+ 
++% Reproducible build:
++\pdfsuppressptexinfo=-1
++\pdfinfoomitdate=1
++\pdftrailerid{}
++
+ \pagestyle{headings} 
+ \showboxdepth=0
+ \makeindex
+diff --git b/document/r6rs.tex a/document/r6rs.tex
+index 12931bd..66119e2 100644
+--- b/document/r6rs.tex
++++ a/document/r6rs.tex
+@@ -1,6 +1,10 @@
+ \documentclass[twoside,twocolumn]{algol60}
+ %\documentclass[twoside]{algol60}
+ 
++% Reproducible build:
++\pdfsuppressptexinfo=-1
++\pdfinfoomitdate=1
++\pdftrailerid{}
+ 
+ \pagestyle{headings}
+ \showboxdepth=0

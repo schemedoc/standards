@@ -1397,10 +1397,22 @@ index b5f93cb..50ccf6f 100644
  % the image preamble
  
 diff --git b/document/r6rs-app.tex a/document/r6rs-app.tex
-index 869a41a..f3a960f 100644
+index 869a41a..8b77889 100644
 --- b/document/r6rs-app.tex
 +++ a/document/r6rs-app.tex
-@@ -11,8 +11,8 @@
+@@ -1,6 +1,11 @@
+  \documentclass[twoside,twocolumn]{algol60}
+ %\documentclass[twoside]{algol60}
+ 
++% Reproducible build:
++\pdfsuppressptexinfo=-1
++\pdfinfoomitdate=1
++\pdftrailerid{}
++
+ \pagestyle{headings} 
+ \showboxdepth=0
+ %\makeindex
+@@ -11,8 +16,8 @@
  \externaldocument[lib:]{r6rs-lib}
  \endtexonly
  
@@ -1411,7 +1423,7 @@ index 869a41a..f3a960f 100644
  
  \begin{document}
  
-@@ -36,7 +36,10 @@ $$
+@@ -36,7 +41,10 @@ $$
    A\authorsc{NTON} \authorsc{VAN} S\authorsc{TRAATEN}}
  \\
  \multicolumn{4}{c}{(\textit{Editors})} \\[1ex]
@@ -1423,7 +1435,7 @@ index 869a41a..f3a960f 100644
  \end{tabular}
  $$
  
-@@ -146,7 +149,7 @@ forms specified in the report and the library report:
+@@ -146,7 +154,7 @@ forms specified in the report and the library report:
  %
  \begin{itemize}
  \item For {\cf cond} forms (see report section~\extref{report:cond}{Derived
@@ -1432,7 +1444,7 @@ index 869a41a..f3a960f 100644
    forms:
  \begin{scheme}
  [\hyper{test} \hyperi{expression} \dotsfoo]
-@@ -154,7 +157,7 @@ forms specified in the report and the library report:
+@@ -154,7 +162,7 @@ forms specified in the report and the library report:
  {}[else \hyperi{expression} \hyperii{expression} \dotsfoo]%
  \end{scheme}
  \item For {\cf case} forms (see report section~\extref{report:case}{Derived
@@ -1441,7 +1453,7 @@ index 869a41a..f3a960f 100644
    forms:
  \begin{scheme}
  [(\hyperi{datum} \dotsfoo) \hyperi{expression} \hyperii{expression} \dotsfoo]
-@@ -199,7 +202,7 @@ forms specified in the report and the library report:
+@@ -199,7 +207,7 @@ forms specified in the report and the library report:
  [\hyper{formals} \hyper{body}]%
  \end{scheme}
  \item For {\cf guard} forms (see library section~\extref{lib:guard}{Exceptions}),
@@ -1450,7 +1462,7 @@ index 869a41a..f3a960f 100644
  \begin{scheme}
  [\hyper{test} \hyperi{expression} \dotsfoo]
  {}[\hyper{test} => \hyper{expression}] 
-@@ -281,11 +284,13 @@ performed by altering a script header from its default form.
+@@ -281,11 +289,13 @@ performed by altering a script header from its default form.
  (import (rnrs base)
          (rnrs io ports)
          (rnrs programs))
@@ -1501,10 +1513,22 @@ index b5f93cb..50ccf6f 100644
  % the image preamble
  
 diff --git b/document/r6rs-lib.tex a/document/r6rs-lib.tex
-index c9df235..0647653 100644
+index c9df235..02a46f7 100644
 --- b/document/r6rs-lib.tex
 +++ a/document/r6rs-lib.tex
-@@ -8,7 +8,7 @@
+@@ -1,6 +1,11 @@
+ \documentclass[twoside,twocolumn]{algol60}
+ %\documentclass[twoside]{algol60}
+ 
++% Reproducible build:
++\pdfsuppressptexinfo=-1
++\pdfinfoomitdate=1
++\pdftrailerid{}
++
+ \pagestyle{headings} 
+ \showboxdepth=0
+ \makeindex
+@@ -8,7 +13,7 @@
  
  \texonly\externaldocument[report:]{r6rs}\endtexonly
  
@@ -1513,7 +1537,7 @@ index c9df235..0647653 100644
  \def\integerversion{6}
  
  \begin{document}
-@@ -38,7 +38,10 @@ $$
+@@ -38,7 +43,10 @@ $$
    J\authorsc{ONATHAN} R\authorsc{EES}} \\
  \multicolumn{4}{c}{(\textit{Editors, Revised\itspace{}$^5$ Report on the
      Algorithmic Language Scheme})} \\
@@ -1525,7 +1549,7 @@ index c9df235..0647653 100644
  \end{tabular}
  $$
  
-@@ -46,6 +49,9 @@ $$
+@@ -46,6 +54,9 @@ $$
  
  \end{center}
  
@@ -1567,10 +1591,22 @@ index b5f93cb..50ccf6f 100644
  % the image preamble
  
 diff --git b/document/r6rs-rationale.tex a/document/r6rs-rationale.tex
-index 7921c0c..f55fde0 100644
+index 7921c0c..12c082c 100644
 --- b/document/r6rs-rationale.tex
 +++ a/document/r6rs-rationale.tex
-@@ -15,8 +15,8 @@
+@@ -1,6 +1,11 @@
+ \documentclass[twoside,twocolumn]{algol60}
+ %\documentclass[twoside]{algol60}
+ 
++% Reproducible build:
++\pdfsuppressptexinfo=-1
++\pdfinfoomitdate=1
++\pdftrailerid{}
++
+ \pagestyle{headings} 
+ \showboxdepth=0
+ \makeindex
+@@ -15,8 +20,8 @@
  \externaldocument[app:]{r6rs-app}
  \endtexonly
  
@@ -1581,7 +1617,7 @@ index 7921c0c..f55fde0 100644
  
  \begin{document}
  
-@@ -44,7 +44,10 @@
+@@ -44,7 +49,10 @@
    J\authorsc{ONATHAN} R\authorsc{EES}} \\
  \multicolumn{4}{c}{(\textit{Editors, Revised\itspace{}$^5$ Report on the
      Algorithmic Language Scheme})} \\
@@ -1593,7 +1629,7 @@ index 7921c0c..f55fde0 100644
  \end{tabular}
  $$
  
-@@ -1538,7 +1541,10 @@ other primitive data types such as pairs.
+@@ -1538,7 +1546,10 @@ other primitive data types such as pairs.
  The goals of the exception mechanism are to help programmers share
  code which relies on exception handling, and to provide information on
  violations of specifications of procedures and syntactic forms.  This
@@ -1605,7 +1641,7 @@ index 7921c0c..f55fde0 100644
  was primarily designed to meet the first goal.  However, it has proven
  suitable for addressing the second goal of dealing with violations as
  well.   (More on the second goal below in the discussion of the
-@@ -1625,7 +1631,7 @@ flags.
+@@ -1625,7 +1636,7 @@ flags.
  
  \section{End-of-line styles}
  
@@ -1646,10 +1682,21 @@ index e5da0d3..e8ebe05 100644
  % the image preamble
  
 diff --git b/document/r6rs.tex a/document/r6rs.tex
-index 12931bd..f74ac2a 100644
+index 12931bd..5b3e3f5 100644
 --- b/document/r6rs.tex
 +++ a/document/r6rs.tex
-@@ -12,7 +12,7 @@
+@@ -1,6 +1,10 @@
+ \documentclass[twoside,twocolumn]{algol60}
+ %\documentclass[twoside]{algol60}
+ 
++% Reproducible build:
++\pdfsuppressptexinfo=-1
++\pdfinfoomitdate=1
++\pdftrailerid{}
+ 
+ \pagestyle{headings}
+ \showboxdepth=0
+@@ -12,7 +16,7 @@
  \externaldocument[lib:]{r6rs-lib}
  \endtexonly
  
@@ -1658,7 +1705,7 @@ index 12931bd..f74ac2a 100644
  \def\TZPtitle{Revised^\rnrsrevision{} Report on the Algorithmic Language Scheme}
  
  \begin{document}
-@@ -43,7 +43,10 @@ $$
+@@ -43,7 +47,10 @@ $$
  \multicolumn{4}{c}{
    R\authorsc{OBERT} B\authorsc{RUCE} F\authorsc{INDLER}, J\authorsc{ACOB} M\authorsc{ATTHEWS}} \\
  \multicolumn{4}{c}{(\textit{Authors, formal semantics})} \\[1ex]
