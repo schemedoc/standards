@@ -1,19 +1,12 @@
 ## RnRS to PDF
 
-These scripts use an old version of LaTeX to generate DVI copies of
-old Scheme RnRS standards. Those DVI files are then turned into PDF
-using `dvipdf`. We need LaTeX version 209 which is so old that
-`pdflatex` does not work.
+This repo does reproducible builds of the RnRS standards documents
+with well documented, auditable build steps. Reproducible means that
+different builds produce bit-identical copies of files.
 
-### Run on the local machine
+For R3RS and R4RS we use the old LaTeX version 209 to generate DVI
+copies. The DVI files are then turned into PDF using `dvipdf`. This
+version of LaTeX is so old that `pdflatex` does not work with it.
 
-`./convert.sh`
-
-You need to have `latex209` and `dvipdf` installed and in `PATH`.
-
-### Run using Docker
-
-`./convert-docker.sh`
-
-You need to have Docker installed and in `PATH`, and your user account
-needs to be in the `docker` group.
+For R5RS, R6RS, and R7RS we use the current version of LaTeX, with
+`pdflatex` to generate PDF files directly.
