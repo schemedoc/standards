@@ -1,0 +1,17 @@
+The contents of http://www.r6rs.org/final/r6rs.tar.gz differ slightly
+from the closest git commit 615ea714b19eada07a674bbfd8ddce1a995c48df.
+In particular, the tex2page pathname has been changed by hand. Apply
+this pre-patch to our git clone of the r6rs repo before comparing it
+to the tar file.
+
+--- a/document/Makefile	2021-02-13 12:42:52.000000000 +0200
++++ b/document/Makefile	2021-02-13 12:43:45.000000000 +0200
+@@ -5,7 +5,7 @@
+ SCHEME = scheme48 -a batch
+ MZSCHEME = mzscheme
+ # use the one from tex2page distro, *not* the one included with PLT Scheme
+-TEX2PAGE = /afs/wsi/home/sperber/build/tex2page/tex2page
++TEX2PAGE = tex2page
+ 
+ report: thirdrun
+ 
