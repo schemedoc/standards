@@ -14,5 +14,5 @@ patch -p 0 <r5rs-official.patch
 (cd r5rs && latex r5rs.tex)
 (cd r5rs && pdflatex r5rs.tex)
 (cd r5rs && dvips r5rs.dvi)
-mv -i r5rs/r5rs.pdf output/
+mv -f r5rs/r5rs.pdf output/
 shasum -c r5rs.sha.dst

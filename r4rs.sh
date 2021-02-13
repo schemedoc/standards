@@ -17,5 +17,5 @@ test -s r4rs/r4rs.dvi
 test -s r4rs/r4rs.pdf
 (cd r4rs && dvips r4rs.dvi)
 test -s r4rs/r4rs.ps
-mv -i r4rs/r4rs.pdf output/
+mv -f r4rs/r4rs.pdf output/
 shasum -c r4rs.sha.dst
