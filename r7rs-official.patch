@@ -1,0 +1,15 @@
+diff --git a/spec/r7rs.tex b/spec/r7rs.tex
+index d009a46..b09a918 100644
+--- a/spec/r7rs.tex
++++ b/spec/r7rs.tex
+@@ -1,5 +1,10 @@
+ \documentclass[twoside,twocolumn]{algol60}
+ 
++% Reproducible build:
++\pdfsuppressptexinfo=-1
++\pdfinfoomitdate=1
++\pdftrailerid{}
++
+ \usepackage{amsmath}
+ 
+ \pagestyle{headings}

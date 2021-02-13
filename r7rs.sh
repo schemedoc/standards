@@ -14,10 +14,11 @@ extract() {
     rmdir r7rs/r7rs-small-spec
 }
 extract
+(cd r7rs && patch -p 2 <../r7rs-official.patch)
 (cd r7rs && make r7rs.pdf)
 mv -f r7rs/r7rs.pdf output/
-shasum -c r7rs.sha.dst
 extract
 (cd r7rs && patch -p 2 <../r7rs-errata.patch)
 (cd r7rs && make r7rs.pdf)
 mv -f r7rs/r7rs.pdf output/errata-corrected-r7rs.pdf
+shasum -c r7rs.sha.dst
