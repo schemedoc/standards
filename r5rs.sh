@@ -9,7 +9,7 @@ shasum -c r5rs.sha.src
 rm -rf r5rs
 tar -xf r5rs.tar
 cp r5rs/r5rs.tex r5rs/r5rs.tex.orig
-patch -p 0 <r5rs.patch
+patch -p 0 <r5rs-official.patch
 (cd r5rs && latex r5rs.tex)
 (cd r5rs && latex r5rs.tex)
 (cd r5rs && pdflatex r5rs.tex)
