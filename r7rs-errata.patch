@@ -1,0 +1,619 @@
+diff --git a/spec/basic.tex b/spec/basic.tex
+index 59a8eeb..1ae0915 100644
+--- a/spec/basic.tex
++++ b/spec/basic.tex
+@@ -27,6 +27,7 @@ locations.  These expression types are called {\em binding constructs}.
+ Those that bind syntactic keywords are listed in section~\ref{macrosection}.
+ The most fundamental of the variable binding constructs is the
+ {\cf lambda} expression, because all other variable binding constructs
++(except top-level bindings)
+ can be explained in terms of {\cf lambda} expressions.  The other
+ variable binding constructs are {\cf let}, {\cf let*}, {\cf letrec},
+ {\cf letrec*}, {\cf let-values}, {\cf let*-values},
+diff --git a/spec/bib.tex b/spec/bib.tex
+index aa850f3..f971957 100644
+--- a/spec/bib.tex
++++ b/spec/bib.tex
+@@ -99,10 +99,10 @@ William Clinger and Jonathan Rees, editors.
+ The revised$^4$ report on the algorithmic language Scheme.
+ In {\em ACM Lisp Pointers} 4(3), pages~1--55, 1991.
+ 
+-\bibitem{uax29}
++\bibitem{uax44}
+ Mark Davis.
+-Unicode Standard Annex \#29, Unicode Text Segmentation.
+-\url{http://unicode.org/reports/tr29/}, 2010.
++Unicode Standard Annex \#44, Unicode Character Database.
++\url{http://unicode.org/reports/tr44/}, 2010.
+ 
+ \bibitem{syntacticabstraction}
+ R.~Kent Dybvig, Robert Hieb, and Carl Bruggeman.
+@@ -112,7 +112,7 @@ Syntactic abstraction in Scheme.
+ \bibitem{srfi4}
+ Marc Feeley.
+ SRFI 4: Homogeneous Numeric Vector Datatypes.
+-\url{http://srfi.schemers.org/srfi-45/}, 1999.
++\url{http://srfi.schemers.org/srfi-4/}, 1999.
+ 
+ \bibitem{Scheme311}
+ Carol Fessenden, William Clinger, Daniel P.~Friedman, and Christopher Haynes.
+@@ -261,4 +261,9 @@ Martin Gasbichler, Eric Knauel, Michael Sperber and Richard Kelsey.
+ How to Add Threads to a Sequential Language Without Getting Tangled Up.
+ {\em Proceedings of the Fourth Workshop on Scheme and Functional Programming}, November 2003.
+ 
++\bibitem{TAI}
++International Earth Rotation Service.
++Historical table of TAI-UTC offsets.
++\url{http://maia.usno.navy.mil/ser7/tai-utc.dat}
++
+ \end{thebibliography}
+diff --git a/spec/derive.tex b/spec/derive.tex
+index f7266ee..a78fa57 100644
+--- a/spec/derive.tex
++++ b/spec/derive.tex
+@@ -48,14 +48,14 @@ Conditional derived syntax types:
+     ((case key
+        (else result1 result2 ...))
+      (begin result1 result2 ...))
+-    ((case key
+-       ((atoms ...) result1 result2 ...))
+-     (if (memv key '(atoms ...))
+-         (begin result1 result2 ...)))
+     ((case key
+        ((atoms ...) => result))
+      (if (memv key '(atoms ...))
+          (result key)))
++    ((case key
++       ((atoms ...) result1 result2 ...))
++     (if (memv key '(atoms ...))
++         (begin result1 result2 ...)))
+     ((case key
+        ((atoms ...) => result)
+        clause clauses ...)
+@@ -531,7 +531,7 @@ macro, here called {\cf guard-aux}.
+     ((case-lambda (params body0 ...) ...)
+      (lambda args
+        (let ((len (length args)))
+-         (let-syntax
++         (letrec-syntax
+              ((cl (syntax-rules ::: ()
+                     ((cl)
+                      (error "no matching clause"))
+diff --git a/spec/expr.tex b/spec/expr.tex
+index 65c1cf5..dbfddbe 100644
+--- a/spec/expr.tex
++++ b/spec/expr.tex
+@@ -77,8 +77,8 @@ themselves; they need not be quoted.
+ 145932     \ev  145932
+ '"abc"     \ev  "abc"
+ "abc"      \ev  "abc"
+-'\#\space   \ev  \#\space
+-\#\space   \ev  \#\space
++'\#\backwhack{}a   \ev  \#\backwhack{}a
++\#\backwhack{}a   \ev  \#\backwhack{}a
+ '\#(a 10)  \ev  \#(a 10)
+ \#(a 10)  \ev  \#(a 10)
+ '\#u8(64 65)  \ev  \#u8(64 65)
+@@ -729,7 +729,9 @@ than once in the list of variables being bound.
+ \semantics
+ The \hyper{variable}s are bound to fresh locations,
+ each \hyper{variable} is assigned in left-to-right order to the
+-result of evaluating the corresponding \hyper{init}, the \hyper{body} is
++result of evaluating the corresponding \hyper{init}
++(interleaving evaluations and assignments),
++the \hyper{body} is
+ evaluated in the resulting environment, and the values of the last
+ expression in \hyper{body} are returned.
+ Despite the left-to-right evaluation and assignment order, each binding of
+@@ -745,20 +747,30 @@ Another restriction is that it is an error to invoke the continuation
+ of an \hyper{init} more than once.
+ 
+ \begin{scheme}
+-(letrec* ((p
+-           (lambda (x)
+-             (+ 1 (q (- x 1)))))
+-          (q
+-           (lambda (y)
+-             (if (zero? y)
+-                 0
+-                 (+ 1 (p (- y 1))))))
+-          (x (p 5))
+-          (y x))
+-  y)
+-                \ev  5%
++;; Returns the arithmetic, geometric, and
++;; harmonic means of a nested list of numbers
++(define (means ton)
++  (letrec*
++     ((mean
++        (lambda (f g)
++          (f (/ (sum g ton) n))))
++      (sum
++        (lambda (g ton)
++          (if (null? ton)
++            (+)
++            (if (number? ton)
++                (g ton)
++                (+ (sum g (car ton))
++                   (sum g (cdr ton)))))))
++      (n (sum (lambda (x) 1) ton)))
++    (values (mean values values)
++            (mean exp log)
++            (mean / /))))
+ \end{scheme}
+ 
++Evaluating {\cf (means '(3 (1 4)))} returns three values:
++8/3, 2.28942848510666 (approximately), and 36/19.
++
+ \begin{entry}{%
+ \proto{let-values}{ \hyper{mv binding spec} \hyper{body}}{\exprtype}}
+ 
+@@ -1520,7 +1532,7 @@ see section~\ref{define-syntax}.
+ \end{scheme}
+ Each \hyper{keyword} is an identifier,
+ each \hyper{transformer spec} is an instance of {\cf syntax-rules}, and
+-\hyper{body} is a sequence of one or more definitions followed
++\hyper{body} is a sequence of zero or more definitions followed
+ by one or more expressions.  It is an error
+ for a \hyper{keyword} to appear more than once in the list of keywords
+ being bound.
+@@ -1596,11 +1608,11 @@ introduced by the {\cf letrec-syntax} expression.
+ A \hyper{transformer spec} has one of the following forms:
+ 
+ \begin{entry}{%
+-\pproto{(syntax-rules (\hyper{literal} \dotsfoo)}{\exprtype}
++\pproto{(syntax-rules (\hyper{pattern literal} \dotsfoo)}{\exprtype}
+ {\tt\obeyspaces%
+ \hspace*{1em}\hyper{syntax rule} \dotsfoo)\\
+ }
+-\pproto{(syntax-rules \hyper{ellipsis} (\hyper{literal} \dotsfoo)}{\exprtype}
++\pproto{(syntax-rules \hyper{ellipsis} (\hyper{pattern literal} \dotsfoo)}{\exprtype}
+ {\tt\obeyspaces%
+ \hspace*{1em}\hyper{syntax rule} \dotsfoo)}\\
+ \pproto{\_}{\auxiliarytype}
+@@ -1608,7 +1620,7 @@ A \hyper{transformer spec} has one of the following forms:
+ \mainschindex{_}
+ 
+ \syntax
+-It is an error if any of the \hyper{literal}s, or the \hyper{ellipsis} in the second form,
++It is an error if any of the \hyper{pattern literal}s, or the \hyper{ellipsis} in the second form,
+ is not an identifier.
+ It is also an error if
+ \hyper{syntax rule} is not of the form
+@@ -1651,7 +1663,7 @@ When a match is found, the macro use is transcribed hygienically
+ according to the template.
+ 
+ An identifier appearing within a \hyper{pattern} can be an underscore
+-({\cf \_}), a literal identifier listed in the list of \hyper{literal}s,
++({\cf \_}), a literal identifier listed in the list of \hyper{pattern literal}s,
+ or the \hyper{ellipsis}.
+ All other identifiers appearing within a \hyper{pattern} are
+ {\em pattern variables}.
+@@ -1667,11 +1679,11 @@ It is an error for the same pattern variable to appear more than once in a
+ 
+ Underscores also match arbitrary input elements but are not pattern variables
+ and so cannot be used to refer to those elements.  If an underscore appears
+-in the \hyper{literal}s list, then that takes precedence and
++in the \hyper{pattern literal}s list, then that takes precedence and
+ underscores in the \hyper{pattern} match as literals.
+ Multiple underscores can appear in a \hyper{pattern}.
+ 
+-Identifiers that appear in \texttt{(\hyper{literal} \dotsfoo)} are
++Identifiers that appear in \texttt{(\hyper{pattern literal} \dotsfoo)} are
+ interpreted as literal
+ identifiers to be matched against corresponding elements of the input.
+ An element in the input matches a literal identifier if and only if it is an
+@@ -1680,7 +1692,7 @@ occurrence in the macro definition have the same lexical binding, or
+ the two identifiers are the same and both have no lexical binding.
+ 
+ A subpattern followed by \hyper{ellipsis} can match zero or more elements of
+-the input, unless \hyper{ellipsis} appears in the \hyper{literal}s, in which
++the input, unless \hyper{ellipsis} appears in the \hyper{pattern literal}s, in which
+ case it is matched as a literal.
+ 
+ More formally, an input expression $E$ matches a pattern $P$ if and only if:
+diff --git a/spec/features.tex b/spec/features.tex
+index 11f5a5e..7a82309 100644
+--- a/spec/features.tex
++++ b/spec/features.tex
+@@ -9,7 +9,9 @@ provide the corresponding feature.
+ \label{standard_features}
+ 
+ \feature{r7rs}{All \rsevenrs\ Scheme implementations have this feature.}
+-\feature{exact-closed}{All algebraic operations except {\cf /} produce
++\feature{exact-closed}{The algebraic operations 
++  {\cf +}, {\cf -}, {\cf *}, and {\cf expt} where the second argument
++  is a non-negative integer produce
+   exact values given exact inputs.}
+ \feature{exact-complex}{Exact complex numbers are provided.}
+ \feature{ieee-float}{Inexact numbers are IEEE 754 binary floating point
+diff --git a/spec/notes.tex b/spec/notes.tex
+index f1ea75d..56b0a5f 100644
+--- a/spec/notes.tex
++++ b/spec/notes.tex
+@@ -257,7 +257,7 @@ distinguishable from \rsixrs\ libraries.
+ In \rsevenrs\ terms, the body of an \rsixrs\ library consists
+ of a single export declaration followed by a single import declaration,
+ followed by commands and definitions.  In \rsevenrs, commands and
+-definitions are not permitted directly within the body: they have to be be wrapped in a {\cf begin}
++definitions are not permitted directly within the body: they have to be wrapped in a {\cf begin}
+ library declaration.
+ 
+ \item There is no direct \rsixrs\ equivalent of the {\cf include}, {\cf include-ci},
+@@ -288,8 +288,10 @@ Non-Unicode characters are permitted.
+ 
+ \item The full numeric tower is optional as in \rfivers, but optional support for IEEE
+ infinities, NaN, and {\mbox -0.0} was adopted from \rsixrs. Most clarifications on
+-numeric results were also adopted, but the \rsixrs\ procedures {\cf real-valued?},
+-{\cf rational-valued?}, and {\cf integer-valued}? were not. 
++numeric results were also adopted, but the semantics of the \rsixrs\ procedures {\cf real?},
++{\cf rational?}, and {\cf integer}? were not adopted.
++(Note that the \rfivers{}/\rsevenrs\ semantics are available in \rsixrs\ using
++{\cf real-valued?}, {\cf rational-valued?}, and {\cf integer-valued?}).
+ The \rsixrs\ division operators {\cf div}, {\cf mod}, {\cf div-and-mod}, {\cf
+ div0}, {\cf mod0} and {\cf div0-and-mod0} are not provided.
+ 
+diff --git a/spec/procs.tex b/spec/procs.tex
+index 03de2d8..3051633 100644
+--- a/spec/procs.tex
++++ b/spec/procs.tex
+@@ -1498,7 +1498,7 @@ The {\cf boolean?} predicate returns \schtrue{} if \var{obj} is either \schtrue{
+ \begin{entry}{%
+ \proto{boolean=?}{ \vari{boolean} \varii{boolean} \variii{boolean} \dotsfoo}{procedure}}
+ 
+-Returns \schtrue{} if all the arguments are booleans and all 
++Returns \schtrue{} if all the arguments 
+ are \schtrue{} or all are \schfalse{}.
+ 
+ \end{entry}
+@@ -1870,7 +1870,7 @@ The {\cf list-tail} procedure could be defined by
+ \proto{list-ref}{ list \vr{k}}{procedure}}
+ 
+ \domain{The \var{list} argument can be circular, but
+-it is an error if \var{list} has fewer than \vr{k} elements.}
++it is an error if \var{list} has \vr{k} or fewer elements.}
+ Returns the \vr{k}th element of \var{list}.  (This is the same
+ as the car of {\tt(list-tail \var{list} \vr{k})}.)
+ 
+@@ -2037,7 +2037,7 @@ Returns \schtrue{} if \var{obj} is a symbol, otherwise returns \schfalse.
+ \begin{entry}{%
+ \proto{symbol=?}{ \vari{symbol} \varii{symbol} \variii{symbol} \dotsfoo}{procedure}}
+ 
+-Returns \schtrue{} if all the arguments are symbols and all have the same
++Returns \schtrue{} if all the arguments all have the same
+ names in the sense of {\cf string=?}.
+ 
+ \begin{note}
+@@ -2215,7 +2215,8 @@ numeric, whitespace, upper case, or lower case characters, respectively,
+ otherwise they return \schfalse.  
+ 
+ Specifically, they must return \schtrue{} when applied to characters with
+-the Unicode properties Alphabetic, Numeric\_Digit, White\_Space, Uppercase, and
++the Unicode properties Alphabetic, Numeric\_Type=Decimal,
++White\_Space, Uppercase, and
+ Lowercase respectively, and \schfalse{} when applied to any other Unicode
+ characters.  Note that many Unicode characters are alphabetic but neither
+ upper nor lower case.
+@@ -2279,11 +2280,11 @@ argument is not the uppercase member of such a pair, it is returned.
+ 
+ The {\cf char-foldcase} procedure applies the Unicode simple
+ case-folding algorithm to its argument and returns the result.  Note that
+-language-sensitive folding is not used.  If the argument is an uppercase
+-letter, the result will be either a lowercase letter
+-or the same as the argument if the lowercase letter does not exist or
+-is not supported by the implementation.
+-See UAX \#29~\cite{uax29} (part of the Unicode Standard) for details.
++language-sensitive folding is not used.  
++If the character that results from folding
++is not supported by the implementation,
++the argument is returned.
++See UAX \#44~\cite{uax44} (part of the Unicode Standard) for details.
+ 
+ Note that many Unicode lowercase characters do not have uppercase
+ equivalents.
+@@ -2501,7 +2502,7 @@ Note that language-sensitive mappings and foldings are not used.
+ 
+ The Unicode Standard prescribes special treatment of the Greek letter
+ $\Sigma$, whose normal lower-case form is $\sigma$ but which becomes
+-$\varsigma$ at the end of a word.  See UAX \#29~\cite{uax29} (part of
++$\varsigma$ at the end of a word.  See UAX \#44~\cite{uax44} (part of
+ the Unicode Standard) for details.  However, implementations of {\cf
+ string-downcase} are not required to provide this behavior, and may
+ choose to change $\Sigma$ to $\sigma$ in all cases.
+@@ -3179,7 +3180,7 @@ The arguments to {\cf string-for-each} are like the arguments to {\cf
+ string-map}, but {\cf string-for-each} calls \var{proc} for its side
+ effects rather than for its values.  Unlike {\cf string-map}, {\cf
+ string-for-each} is guaranteed to call \var{proc} on the elements of
+-the \var{list}s in order from the first element(s) to the last, and the
++the \var{string}s in order from the first element(s) to the last, and the
+ value returned by {\cf string-for-each} is unspecified.
+ If more than one \var{string} is given and not all strings have the same length,
+ {\cf string-for-each} terminates when the shortest string runs out.
+@@ -4456,11 +4457,13 @@ It is an error to mutate any of these strings or the alist itself.
+ 
+ Returns an inexact number representing the current time on the International Atomic
+ Time (TAI) scale.  The value 0.0 represents midnight
+-on January 1, 1970 TAI (equivalent to ten seconds before midnight Universal Time)
++on January 1, 1970 TAI (equivalent to 8.000082 seconds before midnight Universal Time)
+ and the value 1.0 represents one TAI
+ second later.  Neither high accuracy nor high precision are required; in particular,
+ returning Coordinated Universal Time plus a suitable constant might be
+ the best an implementation can do.
++
++As of 2018, a TAI-UTC offset table can be found at~\cite{TAI}.
+ \end{entry}
+ 
+ \begin{entry}{%
+diff --git a/spec/prog.tex b/spec/prog.tex
+index 3eb25f9..6372959 100644
+--- a/spec/prog.tex
++++ b/spec/prog.tex
+@@ -229,7 +229,7 @@ to the return values in the same way that the \hyper{formals} in a
+ call.
+ 
+ \begin{scheme}
+-(define-values (x y) (integer-sqrt 17))
++(define-values (x y) (exact-integer-sqrt 17))
+ (list x y) \ev (4 1)
+ 
+ (let ()
+diff --git a/spec/stdmod-raw.tex b/spec/stdmod-raw.tex
+index fe47d72..a910c09 100644
+--- a/spec/stdmod-raw.tex
++++ b/spec/stdmod-raw.tex
+@@ -303,7 +303,7 @@ complex library, the corresponding identifiers will not appear in this
+ library either.
+ 
+ \begin{scheme}
+-.- * / + < <= = > >= abs acos and angle append apply asin assoc assq
++.- ... * / + < <= = => > >= _ abs acos and angle append apply asin assoc assq
+ .assv atan begin boolean?
+ .caaaar caaadr caadar caaddr
+ .cadaar cadadr caddar cadddr
+@@ -319,7 +319,7 @@ library either.
+ .char-upper-case? char-whitespace? char? char<? char<=? char=? char>?
+ .char>=? close-input-port close-output-port complex? cond cons cos
+ .current-input-port current-output-port define define-syntax delay
+-.denominator display do dynamic-wind eof-object? eq? equal? eqv? eval
++.denominator display do dynamic-wind else eof-object? eq? equal? eqv? eval
+ .even? exact->inexact exact? exp expt floor for-each force gcd if
+ .imag-part inexact->exact inexact? input-port? integer->char integer?
+ .interaction-environment lambda lcm length let let-syntax let* letrec
+@@ -335,7 +335,7 @@ library either.
+ .string-ci<=? string-ci=? string-ci>? string-ci>=? string-copy
+ .string-fill! string-length string-ref string-set! string? string<?
+ .string<=? string=? string>? string>=? substring symbol->string symbol?
+-.tan truncate values vector vector->list vector-fill! vector-length
++.syntax-rules tan truncate values vector vector->list vector-fill! vector-length
+ .vector-ref vector-set! vector? with-input-from-file
+ .with-output-to-file write write-char zero?
+ \end{scheme}
+diff --git a/spec/stdmod.tex b/spec/stdmod.tex
+index e3e2d88..4f12498 100644
+--- a/spec/stdmod.tex
++++ b/spec/stdmod.tex
+@@ -336,23 +336,25 @@ library either.
+ 
+ \begin{scheme}
+ {\cf *}                       {\cf +}
+-{\cf -}                       {\cf /}
+-{\cf <}                       {\cf <=}
+-{\cf =}                       {\cf >}
+-{\cf >=}                      {\cf abs}
+-{\cf acos}                    {\cf and}
+-{\cf angle}                   {\cf append}
+-{\cf apply}                   {\cf asin}
+-{\cf assoc}                   {\cf assq}
+-{\cf assv}                    {\cf atan}
+-{\cf begin}                   {\cf boolean?}
+-{\cf caaaar}                  {\cf caaadr}
+-{\cf caaar}                   {\cf caadar}
+-{\cf caaddr}                  {\cf caadr}
+-{\cf caar}                    {\cf cadaar}
+-{\cf cadadr}                  {\cf cadar}
+-{\cf caddar}                  {\cf cadddr}
+-{\cf caddr}                   {\cf cadr}
++{\cf -}                       {\cf ...}
++{\cf /}                       {\cf <}
++{\cf <=}                      {\cf =}
++{\cf =>}                      {\cf >}
++{\cf >=}                      {\cf \_}
++{\cf abs}                     {\cf acos}
++{\cf and}                     {\cf angle}
++{\cf append}                  {\cf apply}
++{\cf asin}                    {\cf assoc}
++{\cf assq}                    {\cf assv}
++{\cf atan}                    {\cf begin}
++{\cf boolean?\ }               {\cf caaaar}
++{\cf caaadr}                  {\cf caaar}
++{\cf caadar}                  {\cf caaddr}
++{\cf caadr}                   {\cf caar}
++{\cf cadaar}                  {\cf cadadr}
++{\cf cadar}                   {\cf caddar}
++{\cf cadddr}                  {\cf caddr}
++{\cf cadr}
+ {\cf call-with-current-continuation}
+ {\cf call-with-input-file}    {\cf call-with-output-file}
+ {\cf call-with-values}        {\cf car}
+@@ -382,46 +384,46 @@ library either.
+ {\cf define-syntax}           {\cf delay}
+ {\cf denominator}             {\cf display}
+ {\cf do}                      {\cf dynamic-wind}
+-{\cf eof-object?\ }            {\cf eq?}
+-{\cf equal?\ }                 {\cf eqv?}
+-{\cf eval}                    {\cf even?}
+-{\cf exact->inexact}          {\cf exact?}
+-{\cf exp}                     {\cf expt}
+-{\cf floor}                   {\cf for-each}
+-{\cf force}                   {\cf gcd}
+-{\cf if}                      {\cf imag-part}
+-{\cf inexact->exact}          {\cf inexact?}
+-{\cf input-port?\ }            {\cf integer->char}
+-{\cf integer?\ }               {\cf interaction-environment}
+-{\cf lambda}                  {\cf lcm}
+-{\cf length}                  {\cf let}
+-{\cf let*}                    {\cf let-syntax}
+-{\cf letrec}                  {\cf letrec-syntax}
+-{\cf list}                    {\cf list->string}
+-{\cf list->vector}            {\cf list-ref}
+-{\cf list-tail}               {\cf list?}
+-{\cf load}                    {\cf log}
+-{\cf magnitude}               {\cf make-polar}
+-{\cf make-rectangular}        {\cf make-string}
+-{\cf make-vector}             {\cf map}
+-{\cf max}                     {\cf member}
+-{\cf memq}                    {\cf memv}
+-{\cf min}                     {\cf modulo}
+-{\cf negative?\ }              {\cf newline}
+-{\cf not}                     {\cf null-environment}
+-{\cf null?\ }                  {\cf number->string}
+-{\cf number?\ }                {\cf numerator}
+-{\cf odd?\ }                   {\cf open-input-file}
+-{\cf open-output-file}        {\cf or}
+-{\cf output-port?\ }           {\cf pair?}
+-{\cf peek-char}               {\cf positive?}
+-{\cf procedure?\ }             {\cf quasiquote}
+-{\cf quote}                   {\cf quotient}
+-{\cf rational?\ }              {\cf rationalize}
+-{\cf read}                    {\cf read-char}
+-{\cf real-part}               {\cf real?}
+-{\cf remainder}               {\cf reverse}
+-{\cf round}
++{\cf else}                    {\cf eof-object?}
++{\cf eq?\ }                    {\cf equal?}
++{\cf eqv?\ }                   {\cf eval}
++{\cf even?\ }                  {\cf exact->inexact}
++{\cf exact?\ }                 {\cf exp}
++{\cf expt}                    {\cf floor}
++{\cf for-each}                {\cf force}
++{\cf gcd}                     {\cf if}
++{\cf imag-part}               {\cf inexact->exact}
++{\cf inexact?\ }               {\cf input-port?}
++{\cf integer->char}           {\cf integer?}
++{\cf interaction-environment} {\cf lambda}
++{\cf lcm}                     {\cf length}
++{\cf let}                     {\cf let*}
++{\cf let-syntax}              {\cf letrec}
++{\cf letrec-syntax}           {\cf list}
++{\cf list->string}            {\cf list->vector}
++{\cf list-ref}                {\cf list-tail}
++{\cf list?\ }                  {\cf load}
++{\cf log}                     {\cf magnitude}
++{\cf make-polar}              {\cf make-rectangular}
++{\cf make-string}             {\cf make-vector}
++{\cf map}                     {\cf max}
++{\cf member}                  {\cf memq}
++{\cf memv}                    {\cf min}
++{\cf modulo}                  {\cf negative?}
++{\cf newline}                 {\cf not}
++{\cf null-environment}        {\cf null?}
++{\cf number->string}          {\cf number?}
++{\cf numerator}               {\cf odd?}
++{\cf open-input-file}         {\cf open-output-file}
++{\cf or}                      {\cf output-port?}
++{\cf pair?\ }                  {\cf peek-char}
++{\cf positive?\ }              {\cf procedure?}
++{\cf quasiquote}              {\cf quote}
++{\cf quotient}                {\cf rational?}
++{\cf rationalize}             {\cf read}
++{\cf read-char}               {\cf real-part}
++{\cf real?\ }                  {\cf remainder}
++{\cf reverse}                 {\cf round}
+ {\cf scheme-report-environment}
+ {\cf set!}                    {\cf set-car!}
+ {\cf set-cdr!}                {\cf sin}
+@@ -437,12 +439,13 @@ library either.
+ {\cf string=?\ }               {\cf string>=?}
+ {\cf string>?\ }               {\cf string?}
+ {\cf substring}               {\cf symbol->string}
+-{\cf symbol?\ }                {\cf tan}
+-{\cf truncate}                {\cf values}
+-{\cf vector}                  {\cf vector->list}
+-{\cf vector-fill!}            {\cf vector-length}
+-{\cf vector-ref}              {\cf vector-set!}
+-{\cf vector?\ }                {\cf with-input-from-file}
+-{\cf with-output-to-file}     {\cf write}
+-{\cf write-char}              {\cf zero?}
++{\cf symbol?\ }                {\cf syntax-rules}
++{\cf tan}                     {\cf truncate}
++{\cf values}                  {\cf vector}
++{\cf vector->list}            {\cf vector-fill!}
++{\cf vector-length}           {\cf vector-ref}
++{\cf vector-set!}             {\cf vector?}
++{\cf with-input-from-file}    {\cf with-output-to-file}
++{\cf write}                   {\cf write-char}
++{\cf zero?}
+ \end{scheme}
+diff --git a/spec/struct.tex b/spec/struct.tex
+index 8e4dc43..e77c8b9 100644
+--- a/spec/struct.tex
++++ b/spec/struct.tex
+@@ -307,7 +307,7 @@ The symbol ``\evalsto'' used in program examples is read
+ 
+ means that the expression {\tt(* 5 8)} evaluates to the object {\tt 40}.
+ Or, more precisely:  the expression given by the sequence of characters
+-``{\tt(* 5 8)}'' evaluates, in the initial environment, to an object
++``{\tt(* 5 8)}'' evaluates, in an environment containing the base library, to an object
+ that can be represented externally by the sequence of characters ``{\tt
+ 40}.''  See section~\ref{externalreps} for a discussion of external
+ representations of objects.
+diff --git a/spec/syn.tex b/spec/syn.tex
+index a620f91..fa72b8c 100644
+--- a/spec/syn.tex
++++ b/spec/syn.tex
+@@ -45,7 +45,7 @@ language: {\tt \verb"[" \verb"]" \verb"{" \verb"}"}
+ 
+ In addition to the identifier characters of the ASCII repertoire specified
+ below, Scheme implementations may permit any additional repertoire of
+-Unicode characters to be employed in identifiers,
++non-ASCII Unicode characters to be employed in identifiers,
+ provided that each such character has a Unicode general category of Lu,
+ Ll, Lt, Lm, Lo, Mn, Mc, Me, Nd, Nl, No, Pd, Pc, Po, Sc, Sm, Sk, So,
+ or Co, or is U+200C or U+200D (the zero-width non-joiner and joiner,
+@@ -111,7 +111,7 @@ identifiers.
+ \meta{letter} \: a \| b \| c \| ... \| z
+ \> \| A \| B \| C \| ... \| Z
+ \meta{special initial} \: ! \| \$ \| \% \| \verb"&" \| * \| / \| : \| < \| =
+- \>  \| > \| ? \| \verb"^" \| \verb"_" \| \verb"~"
++ \>  \| > \| ? \| @ \| \verb"^" \| \verb"_" \| \verb"~"
+ \meta{subsequent} \: \meta{initial} \| \meta{digit}
+  \>  \| \meta{special subsequent}
+ \meta{digit} \: 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9
+@@ -142,7 +142,7 @@ identifiers.
+ \todo{Explain what happens in the ambiguous case.}
+ \meta{string} \: " \arbno{\meta{string element}} "
+ \meta{string element} \: \meta{any character other than \doublequote{} or \backwhack}
+- \> \| \meta{mnemonic escape} \| \backwhack\doublequote{} \| \backwhack\backwhack 
++ \> \| \meta{mnemonic escape} \| \backwhack\doublequote{} \| \backwhack\backwhack{} \| \backwhack|
+  \>  \| \backwhack{}\arbno{\meta{intraline whitespace}}\meta{line ending}
+  \>  \> \arbno{\meta{intraline whitespace}}
+  \>  \| \meta{inline hex escape}
+@@ -376,6 +376,11 @@ un\-quo\-ta\-tion $D$} takes precedence.
+ 
+ \subsection{Transformers}
+ 
++\begin{note}
++Though this grammar does not say so, a top-level {\tt syntax-rules}
++pattern must be a list pattern, not a vector pattern or an identifier pattern.
++\end{note}
++
+ \begin{grammar}%
+ \meta{transformer spec} \:
+ \> (syntax-rules (\arbno{\meta{identifier}}) \arbno{\meta{syntax rule}})
+@@ -396,6 +401,7 @@ un\-quo\-ta\-tion $D$} takes precedence.
+ \>  \| \meta{character}
+ \>  \| \meta{boolean}
+ \>  \| \meta{number}
++\>  \| \meta{bytevector}
+ \meta{template} \: \meta{pattern identifier}
+ \>  \| (\arbno{\meta{template element}})
+ \>  \| (\atleastone{\meta{template element}} .\ \meta{template})
+@@ -464,7 +470,7 @@ un\-quo\-ta\-tion $D$} takes precedence.
+ \meta{cond-expand clause} \:
+ \> (\meta{feature requirement} \arbno{\meta{library declaration}})
+ \meta{feature requirement} \: \meta{identifier}
+-\> \| \meta{library name}
++\> \| (library \meta{library name})
+ \> \| (and \arbno{\meta{feature requirement}})
+ \> \| (or \arbno{\meta{feature requirement}})
+ \> \| (not \meta{feature requirement})
